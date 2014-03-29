@@ -7,6 +7,7 @@ class SupportRequestsController < ApplicationController
   def index
     @support_requests = SupportRequest.order("done DESC").
                         paginate({per_page: 5, page: params[:page]})
+    session[:current_page] = params[:page]
     if params[:search]
       @search_term = params[:search]
       @support_requests = @support_requests.search_by(@search_term)
@@ -32,7 +33,7 @@ class SupportRequestsController < ApplicationController
 
   def update
     if @support_request.update_attributes(support_request_params)
-      redirect_to support_requests_path, notice: "Request updated successfully!"
+      redirect_to support_requests_path(page: session[:current_page]), notice: "Request updated successfully!"
     else
       render :edit
     end
