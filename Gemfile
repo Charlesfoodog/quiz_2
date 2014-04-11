@@ -11,6 +11,11 @@ gem "bootstrap-sass"
 
 gem "will_paginate"
 gem "will_paginate-bootstrap"
+
+#helps trouble shooting
+gem 'better_errors', '~> 1.1.0'
+gem 'binding_of_caller', '~> 0.7.2'
+
 #makes thoses users accounts
 gem 'devise'
 

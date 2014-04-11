@@ -1,6 +1,6 @@
 class SupportRequestsController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
-  before_action :find_support_request, only: [:edit, :update, :destroy]
+  before_action :find_support_request, only: [:edit, :update,:show, :destroy]
 
 
 
@@ -16,6 +16,11 @@ class SupportRequestsController < ApplicationController
 
   def new
     @support_request = SupportRequest.new
+  end
+
+  def show
+    @comment = Comment.new
+    @answers = @question.answers.ordered_by_creation
   end
 
   def create
@@ -45,6 +50,12 @@ class SupportRequestsController < ApplicationController
     else
       redirect_to support_requests_path, error: "Request wasn't deleted!"
     end
+  end
+
+  def vote_up
+    @support_request.increment!(:vote_count)
+    session[:has_voted] = true
+    redirect_to @support_request
   end
 
   private
