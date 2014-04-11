@@ -11,23 +11,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140329205355) do
+ActiveRecord::Schema.define(version: 20140411171647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "comments", force: true do |t|
+    t.text     "body"
+    t.integer  "support_request_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["support_request_id"], name: "index_comments_on_support_request_id", using: :btree
+
   create_table "support_requests", force: true do |t|
-    t.string   "name"
+    t.string   "discussion"
     t.string   "email"
-    t.string   "department"
+    t.text     "comments"
     t.boolean  "done",       default: false
     t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "support_requests", ["comments"], name: "index_support_requests_on_comments", using: :btree
+  add_index "support_requests", ["discussion"], name: "index_support_requests_on_discussion", using: :btree
   add_index "support_requests", ["email"], name: "index_support_requests_on_email", using: :btree
   add_index "support_requests", ["message"], name: "index_support_requests_on_message", using: :btree
-  add_index "support_requests", ["name"], name: "index_support_requests_on_name", using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

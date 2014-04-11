@@ -1,7 +1,8 @@
 class SupportRequest < ActiveRecord::Base
 
+     has_many :comments
 
-  validates_presence_of :name, :email
+  validates_presence_of :email
 
   DEPARTMENT_SALES     = "sales".freeze
   DEPARTMENT_MARKETING = "marketing".freeze
@@ -13,11 +14,13 @@ class SupportRequest < ActiveRecord::Base
 
 
   def self.search_by(search_term)
-    where(["LOWER(name)    LIKE :search_term OR 
+    where(["LOWER(name)    LIKE :search_term OR
             LOWER(email)   LIKE :search_term OR
-            LOWER(message) LIKE :search_term", 
+            LOWER(message) LIKE :search_term",
             {search_term: "%#{search_term.downcase}%"}]
           )
+
+
   end
 
 end

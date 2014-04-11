@@ -1,8 +1,8 @@
 <%= form_for @support_request do |f| %>
 
   <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: "form-control" %>
+    <%= f.label :idea_name %>
+    <%= f.text_field :discussion, class: "form-control" %>
   </div>
 
   <div class="form-group">
@@ -10,15 +10,10 @@
     <%= f.email_field :email, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <% SupportRequest::DEPARTMENTS.each do |sr| %>
-      <%= f.radio_button :department, sr, checked: sr ==  SupportRequest::DEPARTMENT_TECHNICAL %>
-      <%= f.label :department, sr.capitalize %>
-    <% end %>
-  </div>
+
 
   <div class="form-group">
-    <%= f.label :message %>
+    <%= f.label :bio %>
     <%= f.text_area :message, class: "form-control" %>
   </div>
 

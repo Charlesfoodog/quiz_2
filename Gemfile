@@ -11,7 +11,8 @@ gem "bootstrap-sass"
 
 gem "will_paginate"
 gem "will_paginate-bootstrap"
-
+#makes thoses users accounts
+gem 'devise'
 
 # Use postgresql as the database for Active Record
 gem 'pg'

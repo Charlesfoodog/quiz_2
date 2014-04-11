@@ -1,5 +1,5 @@
 class SupportRequestsController < ApplicationController
-
+  before_filter :authenticate_user!, except: [:index, :show]
   before_action :find_support_request, only: [:edit, :update, :destroy]
 
 
@@ -51,7 +51,7 @@ class SupportRequestsController < ApplicationController
 
   def support_request_params
     params.require(:support_request).
-            permit([:name, :email, :message, :department, :done])
+            permit([:discussion, :email, :message, :message, :done])
   end
 
   def find_support_request
